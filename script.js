@@ -1,29 +1,27 @@
 const contactConfig = {
-  whatsappNumber: "523313023706", // WhatsApp link format: country code + number, without + or spaces.
+  whatsappNumber: "523313023706",
   whatsappDisplay: "331 302 3706",
-  email: "navahilario499@gmail.com", // Replace with the quote email address.
-  defaultMessage: "Hola, quiero cotizar una invitación digital para mi evento.",
+  email: "navahilario499@gmail.com",
+  defaultMessage:
+    "Hola, quiero cotizar una invitación digital para mi evento.",
 };
 
 const demoInvitations = [
   {
     title: "Boda elegante",
     category: "Bodas",
-    description: "Diseño romántico con agenda, mapa, galería, música y RSVP.",
+    description:
+      "Diseño romántico con agenda, mapa, galería, música y RSVP.",
     url: "",
     status: "Agregar enlace",
-    gradient:
-      "linear-gradient(135deg, rgba(255,184,107,.72), rgba(232,107,220,.64))",
   },
   {
     title: "Quinceañera glam",
     category: "Quinceañeras",
     description:
       "Experiencia visual con cuenta regresiva, dress code y detalles del salón.",
-    url: "#",
+    url: "https://xv-regina-ashy.vercel.app/",
     status: "Agregar enlace",
-    gradient:
-      "linear-gradient(135deg, rgba(232,107,220,.74), rgba(124,224,255,.52))",
   },
   {
     title: "Evento corporativo",
@@ -32,24 +30,50 @@ const demoInvitations = [
       "Landing profesional para conferencias, cenas, lanzamientos o networking.",
     url: "#",
     status: "Agregar enlace",
-    gradient:
-      "linear-gradient(135deg, rgba(124,224,255,.64), rgba(255,184,107,.46))",
   },
 ];
 
-function renderDemoCards() {
-  const grid = document.querySelector("#demo-grid");
-  if (!grid) return;
+const body = document.body;
+const overlay = document.querySelector("#info-overlay");
+const menuToggle = document.querySelector("[data-menu-toggle]");
+const closeMenu = document.querySelector("[data-menu-close]");
+const openPanelLinks = document.querySelectorAll("[data-open-panel]");
+let lastFocusedElement = null;
 
-  grid.innerHTML = demoInvitations
+function openMenu(targetId) {
+  lastFocusedElement = document.activeElement;
+  body.classList.add("menu-open");
+  overlay.setAttribute("aria-hidden", "false");
+  menuToggle.setAttribute("aria-expanded", "true");
+
+  if (targetId) {
+    const target = document.querySelector(`#${targetId}`);
+    target?.scrollIntoView({ block: "start" });
+  }
+
+  closeMenu.focus({ preventScroll: true });
+}
+
+function closeOverlay() {
+  body.classList.remove("menu-open");
+  overlay.setAttribute("aria-hidden", "true");
+  menuToggle.setAttribute("aria-expanded", "false");
+  lastFocusedElement?.focus?.({ preventScroll: true });
+}
+
+function renderDemoList() {
+  const list = document.querySelector("#demo-list");
+  if (!list) return;
+
+  list.innerHTML = demoInvitations
     .map((demo) => {
       const hasRealUrl = demo.url && demo.url !== "#";
       const linkAttributes = hasRealUrl
         ? `href="${demo.url}" target="_blank" rel="noopener"`
-        : 'href="#demos" aria-disabled="true"';
+        : `href="#demos" aria-disabled="true"`;
 
       return `
-        <article class="demo-card reveal" style="--card-gradient: ${demo.gradient}">
+        <article class="demo-card">
           <span class="tag">${demo.category}</span>
           <h3>${demo.title}</h3>
           <p>${demo.description}</p>
@@ -61,55 +85,52 @@ function renderDemoCards() {
 }
 
 function setupContactLinks() {
-  const whatsappLink = document.querySelector("#whatsapp-link");
-  const emailLink = document.querySelector("#email-link");
-  const placeholder = document.querySelector("#contact-placeholder");
-
   const encodedMessage = encodeURIComponent(contactConfig.defaultMessage);
-  const encodedSubject = encodeURIComponent("Cotización de invitación digital");
-
-  if (whatsappLink) {
-    whatsappLink.href = `https://wa.me/${contactConfig.whatsappNumber}?text=${encodedMessage}`;
-  }
-
-  if (emailLink) {
-    emailLink.href = `mailto:${contactConfig.email}?subject=${encodedSubject}&body=${encodedMessage}`;
-  }
-
-  if (placeholder) {
-    placeholder.textContent = `${contactConfig.whatsappDisplay} · ${contactConfig.email}`;
-  }
-}
-
-function setupRevealAnimations() {
-  const elements = document.querySelectorAll(".reveal");
-
-  if (!("IntersectionObserver" in window)) {
-    elements.forEach((element) => element.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.16 },
+  const encodedSubject = encodeURIComponent(
+    "Cotización de invitación digital",
   );
+  const whatsappUrl = `https://wa.me/${contactConfig.whatsappNumber}?text=${encodedMessage}`;
+  const emailUrl = `mailto:${contactConfig.email}?subject=${encodedSubject}&body=${encodedMessage}`;
 
-  elements.forEach((element) => observer.observe(element));
+  document
+    .querySelectorAll("#whatsapp-link, #hero-whatsapp")
+    .forEach((link) => {
+      link.href = whatsappUrl;
+    });
+
+  const emailLink = document.querySelector("#email-link");
+  if (emailLink) emailLink.href = emailUrl;
+
+  const placeholder = document.querySelector("#contact-placeholder");
+  if (placeholder)
+    placeholder.textContent = `${contactConfig.whatsappDisplay} · ${contactConfig.email}`;
 }
 
-function setCurrentYear() {
-  const year = document.querySelector("#current-year");
-  if (year) year.textContent = new Date().getFullYear();
-}
+menuToggle.addEventListener("click", () => openMenu());
+closeMenu.addEventListener("click", closeOverlay);
 
-renderDemoCards();
+openPanelLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    const panelMap = {
+      services: "servicios",
+      demos: "demos",
+      process: "valor",
+      contact: "contacto",
+    };
+    openMenu(panelMap[link.dataset.openPanel]);
+  });
+});
+
+overlay.addEventListener("click", (event) => {
+  if (event.target === overlay) closeOverlay();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && body.classList.contains("menu-open")) {
+    closeOverlay();
+  }
+});
+
+renderDemoList();
 setupContactLinks();
-setCurrentYear();
-setupRevealAnimations();
