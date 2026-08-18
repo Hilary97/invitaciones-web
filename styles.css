@@ -548,9 +548,15 @@ body.menu-open .overlay {
   background: rgba(8, 6, 4, 0.42);
 }
 
+.demo-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 0.85rem;
+}
+
 .demo-card a {
   display: inline-flex;
-  margin-top: 0.85rem;
   color: #fff;
   font-weight: 900;
   text-decoration-thickness: 1px;

@@ -10,7 +10,20 @@ const demoInvitations = [
     title: "Boda elegante",
     category: "Bodas",
     description: "Diseño romántico con agenda, mapa, galería, música y RSVP.",
-    url: "https://diseno-prototipo-boda.vercel.app/",
+    links: [
+      {
+        label: "Demo 1",
+        url: "https://diseno-prototipo-boda.vercel.app/",
+      },
+      {
+        label: "Demo 2",
+        url: "https://nuestra-boda-chi-nine.vercel.app/",
+      },
+      {
+        label: "Demo 3",
+        url: "https://nuevo-diseno-boda.vercel.app/",
+      },
+    ],
     status: "Agregar enlace",
   },
   {
@@ -18,7 +31,12 @@ const demoInvitations = [
     category: "Quinceañeras",
     description:
       "Experiencia visual con cuenta regresiva, dress code y detalles del salón.",
-    url: "https://xv-regina-ashy.vercel.app/",
+    links: [
+      {
+        label: "Demo 1",
+        url: "https://xv-regina-ashy.vercel.app/",
+      },
+    ],
     status: "Agregar enlace",
   },
 ];
@@ -57,17 +75,24 @@ function renderDemoList() {
 
   list.innerHTML = demoInvitations
     .map((demo) => {
-      const hasRealUrl = demo.url && demo.url !== "#";
-      const linkAttributes = hasRealUrl
-        ? `href="${demo.url}" target="_blank" rel="noopener"`
-        : `href="#demos" aria-disabled="true"`;
+      const links = (demo.links || []).filter(
+        (link) => link.url && link.url !== "#",
+      );
+      const demoLinks = links.length
+        ? links
+            .map(
+              (link) =>
+                `<a href="${link.url}" target="_blank" rel="noopener">${link.label}</a>`,
+            )
+            .join("")
+        : `<a href="#demos" aria-disabled="true">${demo.status}</a>`;
 
       return `
         <article class="demo-card">
           <span class="tag">${demo.category}</span>
           <h3>${demo.title}</h3>
           <p>${demo.description}</p>
-          <a ${linkAttributes}>${hasRealUrl ? "Abrir demo" : demo.status}</a>
+          <div class="demo-links">${demoLinks}</div>
         </article>
       `;
     })
