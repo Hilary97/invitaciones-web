@@ -585,16 +585,58 @@ body.menu-open .overlay {
   .menu-toggle {
     display: inline-flex;
   }
+  .stage-video {
+    opacity: 0.66;
+    filter: sepia(0.32) saturate(1.02) contrast(1.08) brightness(0.86);
+    object-position: 58% center;
+  }
+  .stage::before {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 5, 5, 0.48),
+        rgba(5, 5, 5, 0.1) 48%,
+        rgba(5, 5, 5, 0.48)
+      ),
+      linear-gradient(
+        0deg,
+        rgba(5, 5, 5, 0.9),
+        rgba(5, 5, 5, 0.24) 36%,
+        rgba(5, 5, 5, 0.36) 72%,
+        rgba(5, 5, 5, 0.68)
+      );
+  }
+  .stage::after {
+    opacity: 0.54;
+  }
   .hero {
-    align-self: center;
-    padding-top: 6rem;
+    align-self: end;
+    padding-top: 9rem;
+    padding-bottom: clamp(1.1rem, 4vh, 2.4rem);
   }
   .hero-grid {
-    grid-template-columns: 1fr;
-    align-items: start;
+    grid-template-columns: minmax(0, 0.82fr);
+    justify-content: center;
+    align-items: end;
+    text-align: center;
+  }
+  .hero-grid > section {
+    display: grid;
+    justify-items: center;
+  }
+  h1,
+  .hero-copy {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-copy {
+    max-width: 31rem;
+  }
+  .actions {
+    justify-content: center;
   }
   .side-panel {
-    justify-self: start;
+    justify-self: center;
     width: min(100%, 34rem);
   }
   .wide,
@@ -612,25 +654,78 @@ body.menu-open .overlay {
 @media (max-width: 640px) {
   .site-header {
     align-items: flex-start;
+    padding-top: max(0.9rem, env(safe-area-inset-top));
   }
   .brand span:last-child {
-    max-width: 9.5rem;
+    max-width: 8.4rem;
     line-height: 1.15;
   }
-  h1 {
-    font-size: clamp(3.1rem, 18vw, 5.4rem);
+  .stage-video {
+    opacity: 0.76;
+    filter: sepia(0.26) saturate(1.08) contrast(1.05) brightness(0.92);
+    object-position: 63% center;
+    transform: scale(1.01);
+  }
+  .stage::before {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 5, 5, 0.32),
+        rgba(5, 5, 5, 0.04) 54%,
+        rgba(5, 5, 5, 0.3)
+      ),
+      linear-gradient(
+        0deg,
+        rgba(5, 5, 5, 0.92) 0%,
+        rgba(5, 5, 5, 0.68) 20%,
+        rgba(5, 5, 5, 0.12) 44%,
+        rgba(5, 5, 5, 0.16) 70%,
+        rgba(5, 5, 5, 0.68) 100%
+      );
+  }
+  .stage::after {
+    opacity: 0.42;
   }
   .hero {
-    padding-bottom: 1.1rem;
+    align-self: end;
+    padding: 7.8rem 1rem max(1rem, env(safe-area-inset-bottom));
+  }
+  .hero-grid {
+    grid-template-columns: minmax(0, 0.92fr);
+    justify-content: center;
+    text-align: center;
+  }
+  h1 {
+    max-width: 9.2ch;
+    margin-bottom: 0.9rem;
+    font-size: clamp(2.55rem, 13.6vw, 4rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+  .eyebrow {
+    margin-bottom: 0.65rem;
+    font-size: 0.68rem;
+  }
+  .hero-copy {
+    max-width: 22rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
   .side-panel {
     display: none;
   }
   .actions {
+    max-width: 18rem;
+    margin-inline: auto;
     align-items: stretch;
+    justify-content: center;
+    gap: 0.55rem;
   }
   .button {
     width: 100%;
+    min-height: 2.85rem;
+    padding: 0.72rem 1rem;
   }
   .overlay {
     padding: 0;

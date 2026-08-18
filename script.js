@@ -2,17 +2,15 @@ const contactConfig = {
   whatsappNumber: "523313023706",
   whatsappDisplay: "331 302 3706",
   email: "navahilario499@gmail.com",
-  defaultMessage:
-    "Hola, quiero cotizar una invitación digital para mi evento.",
+  defaultMessage: "Hola, quiero cotizar una invitación digital para mi evento.",
 };
 
 const demoInvitations = [
   {
     title: "Boda elegante",
     category: "Bodas",
-    description:
-      "Diseño romántico con agenda, mapa, galería, música y RSVP.",
-    url: "",
+    description: "Diseño romántico con agenda, mapa, galería, música y RSVP.",
+    url: "https://diseno-prototipo-boda.vercel.app/",
     status: "Agregar enlace",
   },
   {
@@ -21,14 +19,6 @@ const demoInvitations = [
     description:
       "Experiencia visual con cuenta regresiva, dress code y detalles del salón.",
     url: "https://xv-regina-ashy.vercel.app/",
-    status: "Agregar enlace",
-  },
-  {
-    title: "Evento corporativo",
-    category: "Corporativo",
-    description:
-      "Landing profesional para conferencias, cenas, lanzamientos o networking.",
-    url: "#",
     status: "Agregar enlace",
   },
 ];
@@ -86,9 +76,7 @@ function renderDemoList() {
 
 function setupContactLinks() {
   const encodedMessage = encodeURIComponent(contactConfig.defaultMessage);
-  const encodedSubject = encodeURIComponent(
-    "Cotización de invitación digital",
-  );
+  const encodedSubject = encodeURIComponent("Cotización de invitación digital");
   const whatsappUrl = `https://wa.me/${contactConfig.whatsappNumber}?text=${encodedMessage}`;
   const emailUrl = `mailto:${contactConfig.email}?subject=${encodedSubject}&body=${encodedMessage}`;
 
