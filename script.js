@@ -40,6 +40,10 @@ const demoInvitations = [
         label: "Demo 1",
         url: "https://xv-regina-ashy.vercel.app/",
       },
+      {
+        label: "Demo 2",
+        url: "https://diseno-xv-prototipo2.vercel.app/",
+      },
     ],
     status: "Agregar enlace",
   },
