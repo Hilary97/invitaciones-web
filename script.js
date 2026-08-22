@@ -13,18 +13,22 @@ const demoInvitations = [
     links: [
       {
         label: "Demo 1",
-        url: "https://diseno-prototipo-boda.vercel.app/",
+        url: "https://diseno-boda-prototipo5.vercel.app/",
       },
       {
         label: "Demo 2",
-        url: "https://diseno-prototipo-boda4.vercel.app/",
+        url: "https://diseno-prototipo-boda.vercel.app/",
       },
       {
         label: "Demo 3",
+        url: "https://diseno-prototipo-boda4.vercel.app/",
+      },
+      {
+        label: "Demo 4",
         url: "https://nuevo-diseno-boda.vercel.app/",
       },
       {
-        label: "Demo4",
+        label: "Demo 5",
         url: "https://nuestra-boda-chi-nine.vercel.app/",
       },
     ],
